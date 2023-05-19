@@ -1,0 +1,306 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="calcium" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <!--
+*******************************************************
+***         U   N   I   T   S                       ***
+*******************************************************
+-->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+*********************************************************
+***       C   O   M   P   O   N   E   N   T   S       ***
+*********************************************************
+-->
+    <component name="calcium">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="Ca" public_interface="out" units="uM"/>
+        <variable initial_value="1800" name="stimEnd" public_interface="out" units="s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>Ca</ci>
+                <piecewise>
+                    <piece>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="uM">0.459</cn>
+                                        <cn cellml:units="uM">0.576</cn>
+                                    </apply>
+                                    <ci>t</ci>
+                                </apply>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <cn cellml:units="uM">0.576</cn>
+                        </apply>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <geq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">0</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="uM">0.406</cn>
+                                        <cn cellml:units="uM">0.459</cn>
+                                    </apply>
+                                    <apply>
+                                        <minus/>
+                                        <ci>t</ci>
+                                        <cn cellml:units="s">180</cn>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <cn cellml:units="uM">0.459</cn>
+                        </apply>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">360</cn>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="uM">0.377</cn>
+                                        <cn cellml:units="uM">0.406</cn>
+                                    </apply>
+                                    <apply>
+                                        <minus/>
+                                        <ci>t</ci>
+                                        <cn cellml:units="s">360</cn>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <cn cellml:units="uM">0.406</cn>
+                        </apply>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">360</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">540</cn>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="uM">0.348</cn>
+                                        <cn cellml:units="uM">0.377</cn>
+                                    </apply>
+                                    <apply>
+                                        <minus/>
+                                        <ci>t</ci>
+                                        <cn cellml:units="s">540</cn>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <cn cellml:units="uM">0.377</cn>
+                        </apply>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">540</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">720</cn>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="uM">0.336</cn>
+                                        <cn cellml:units="uM">0.348</cn>
+                                    </apply>
+                                    <apply>
+                                        <minus/>
+                                        <ci>t</ci>
+                                        <cn cellml:units="s">720</cn>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <cn cellml:units="uM">0.348</cn>
+                        </apply>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">720</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">900</cn>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <apply>
+                            <plus/>
+                            <apply>
+                                <divide/>
+                                <apply>
+                                    <times/>
+                                    <apply>
+                                        <minus/>
+                                        <cn cellml:units="uM">0.334</cn>
+                                        <cn cellml:units="uM">0.336</cn>
+                                    </apply>
+                                    <apply>
+                                        <minus/>
+                                        <ci>t</ci>
+                                        <cn cellml:units="s">900</cn>
+                                    </apply>
+                                </apply>
+                                <cn cellml:units="s">180</cn>
+                            </apply>
+                            <cn cellml:units="uM">0.336</cn>
+                        </apply>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">900</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">1080</cn>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <piece>
+                        <cn cellml:units="uM">0.334</cn>
+                        <apply>
+                            <and/>
+                            <apply>
+                                <gt/>
+                                <ci>t</ci>
+                                <cn cellml:units="s">1080</cn>
+                            </apply>
+                            <apply>
+                                <leq/>
+                                <ci>t</ci>
+                                <ci>stimEnd</ci>
+                            </apply>
+                        </apply>
+                    </piece>
+                    <otherwise>
+                        <cn cellml:units="uM">0.06</cn>
+                    </otherwise>
+                </piecewise>
+            </apply>
+        </math>
+    </component>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#calcium">
+            <dc:creator xmlns:dc="http://purl.org/dc/elements/1.1/" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <vCard:N xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <vCard:Family xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Cooling</vCard:Family>
+                    <vCard:Given xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#">Michael</vCard:Given>
+                </vCard:N>
+                <vCard:EMAIL xmlns:vCard="http://www.w3.org/2001/vcard-rdf/3.0#" rdf:parseType="Resource" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                    <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">m.cooling@auckland.ac.nz</rdf:value>
+                    <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:resource="http://imc.org/vCard/3.0#internet"/>
+                </vCard:EMAIL>
+            </dc:creator>
+            <dc:title xmlns:dc="http://purl.org/dc/elements/1.1/">Cooling's calcium module for the Tomida-derived protocol</dc:title>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:ID="v0">
+            <bqbiol:identity xmlns:bqbiol="http://biomodels.net/biology-qualifiers/" rdf:resource="http://identifiers.org/opb/OPB_01361" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:ID="v1">
+            <semsim:isComputationalComponentFor xmlns:semsim="http://www.bhi.washington.edu/SemSim#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#property_1">
+                    <semsim:physicalPropertyOf xmlns:semsim="http://www.bhi.washington.edu/SemSim#">
+                        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#entity_0">
+                            <ro:contained_in xmlns:ro="http://www.obofoundry.org/ro/ro.owl#">
+                                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#entity_1">
+                                    <semsim:refersTo xmlns:semsim="http://www.bhi.washington.edu/SemSim#" rdf:resource="http://identifiers.org/fma/FMA:14067" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+                                </rdf:Description>
+                            </ro:contained_in>
+                            <semsim:refersTo xmlns:semsim="http://www.bhi.washington.edu/SemSim#" rdf:resource="http://identifiers.org/chebi/CHEBI:39123" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+                        </rdf:Description>
+                    </semsim:physicalPropertyOf>
+                    <semsim:refersTo xmlns:semsim="http://www.bhi.washington.edu/SemSim#" rdf:resource="http://identifiers.org/opb/OPB_00340" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"/>
+                </rdf:Description>
+            </semsim:isComputationalComponentFor>
+        </rdf:Description>
+    </rdf:RDF>
+</model>

@@ -1,0 +1,309 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model cmeta:id="NFATMyocyte_TomidaProtocol" name="NFATMyocyte_Tomida_Protocol" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="New_folder/calcium_Tomida_Protocol.cellml">
+        <component component_ref="calcium" name="calcium"/>
+    </import>
+    <import xlink:href="New_folder/calcineurin_Tomida_Protocol.cellml">
+        <component component_ref="calcineurin" name="calcineurin"/>
+    </import>
+    <import xlink:href="New_folder/NFATCycling_TomidaProtocol.cellml">
+        <component component_ref="NFAT_Cycling" name="NFAT_Cycling"/>
+        <component component_ref="NFAT_Cycling_equations" name="NFAT_Cycling_equations"/>
+    </import>
+    <!--
+        *******************************************************
+        ***         U   N   I   T   S                       ***
+        *******************************************************
+        -->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="per_uM_s">
+        <unit exponent="-1" units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+     *********************************************************
+     ***       C   O   M   P   O   N   E   N   T   S       ***
+     *********************************************************
+     -->
+    <component name="environment">
+        <variable name="t" public_interface="out" units="s"/>
+    </component>
+    <component name="geometry">
+        <variable initial_value="50" name="Ccn" private_interface="out" units="dimensionless"/>
+        <variable name="t" private_interface="out" public_interface="in" units="s"/>
+        <variable name="Ca" private_interface="in" units="uM"/>
+        <variable name="NFATN_c" private_interface="in" units="uM"/>
+        <variable name="NFATN_c_percentage" units="uM"/>
+        <variable name="NFATN_n" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="J_NFATNn" private_interface="in" public_interface="out" units="uM_per_s"/>
+        <!--        Ccn = sel
+            case (t >= 0{s}) and (t <= 7200{s}):
+                0{uM};
+            otherwise:
+                50{uM};
+        endsel;-->
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>NFATN_c_percentage</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">100</cn>
+                    <ci>NFATN_c</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <component name="NFAT_Cycling_interface">
+        <variable name="nuclearNFAT" units="uM"/>
+        <variable name="NFATN_n" public_interface="in" units="uM"/>
+        <variable name="NFATp_n" public_interface="in" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>nuclearNFAT</ci>
+                <apply>
+                    <times/>
+                    <cn cellml:units="dimensionless">2</cn>
+                    <apply>
+                        <plus/>
+                        <ci>NFATN_n</ci>
+                        <ci>NFATp_n</ci>
+                    </apply>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="environment">
+            <component_ref component="geometry">
+                <component_ref component="calcium"/>
+                <component_ref component="calcineurin"/>
+                <component_ref component="NFAT_Cycling"/>
+                <component_ref component="NFAT_Cycling_interface"/>
+            </component_ref>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="environment" component_2="geometry"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="geometry" component_2="calcium"/>
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="Ca" variable_2="Ca"/>
+    </connection>
+    <connection>
+        <map_components component_1="geometry" component_2="calcineurin"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="geometry" component_2="NFAT_Cycling"/>
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="Ccn" variable_2="Ccn"/>
+        <map_variables variable_1="NFATN_c" variable_2="NFATN_c"/>
+        <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
+        <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
+    </connection>
+    <!--        def map between calcium and calcineurin for
+            vars Ca and Ca;
+        enddef;-->
+    <connection>
+        <map_components component_1="calcineurin" component_2="NFAT_Cycling"/>
+        <map_variables variable_1="act_N" variable_2="act_N"/>
+        <map_variables variable_1="Ntot" variable_2="Ntot"/>
+    </connection>
+    <connection>
+        <map_components component_1="NFAT_Cycling_interface" component_2="NFAT_Cycling"/>
+        <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
+        <map_variables variable_1="NFATp_n" variable_2="NFATp_n"/>
+    </connection>
+    <rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="">
+            <creator xmlns="http://purl.org/dc/elements/1.1/">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n1"/>
+            </creator>
+            <title xmlns="http://purl.org/dc/elements/1.1/" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Sensitivity of NFAT Cycling to Cytosolic Calcium Concentration: Implications for Hypertrophic Signals in Cardiac Myocytes (Tomida-derived calcium protocol)</title>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n1">
+            <N xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n2"/>
+            </N>
+            <ORG xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n3"/>
+            </ORG>
+            <EMAIL xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n4"/>
+            </EMAIL>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n2">
+            <Family xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Cooling</Family>
+            <Given xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Michael</Given>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n3">
+            <Orgname xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Auckland Bioengineering Institute</Orgname>
+            <Orgunit xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">University of Auckland</Orgunit>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n4">
+            <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://imc.org/vCard/3.0#internet"/>
+            </rdf:type>
+            <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">m.cooling@auckland.ac.nz</rdf:value>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="#NFATMyocyte_TomidaProtocol">
+            <reference xmlns="http://www.cellml.org/bqs/1.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n5"/>
+            </reference>
+            <reference xmlns="http://www.cellml.org/bqs/1.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n6"/>
+            </reference>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n5">
+            <JournalArticle xmlns="http://www.cellml.org/bqs/1.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n7"/>
+            </JournalArticle>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n7">
+            <creator xmlns="http://purl.org/dc/elements/1.1/">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n8"/>
+            </creator>
+            <title xmlns="http://purl.org/dc/elements/1.1/" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Sensitivity of NFAT Cycling to Cytosolic Calcium Concentration: Implications for Hypertrophic Signals in Cardiac Myocytes</title>
+            <volume xmlns="http://www.cellml.org/bqs/1.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">96</volume>
+            <first_page xmlns="http://www.cellml.org/bqs/1.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">2095</first_page>
+            <last_page xmlns="http://www.cellml.org/bqs/1.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">2104</last_page>
+            <Journal xmlns="http://www.cellml.org/bqs/1.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n9"/>
+            </Journal>
+            <issued xmlns="http://purl.org/dc/terms/">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n10"/>
+            </issued>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n8">
+            <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Seq"/>
+            </rdf:type>
+            <rdf:_1 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n11"/>
+            </rdf:_1>
+            <rdf:_2 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n12"/>
+            </rdf:_2>
+            <rdf:_3 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n13"/>
+            </rdf:_3>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n11">
+            <N xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n14"/>
+            </N>
+            <ORG xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n15"/>
+            </ORG>
+            <EMAIL xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n16"/>
+            </EMAIL>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n14">
+            <Family xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Cooling</Family>
+            <Given xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Mike</Given>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n16">
+            <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://imc.org/vCard/3.0#internet"/>
+            </rdf:type>
+            <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">m.cooling@auckland.ac.nz</rdf:value>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n15">
+            <Orgname xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Auckland Bioengineering Institute</Orgname>
+            <Orgunit xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">University of Auckland</Orgunit>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n12">
+            <N xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n17"/>
+            </N>
+            <ORG xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n18"/>
+            </ORG>
+            <EMAIL xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n19"/>
+            </EMAIL>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n17">
+            <Family xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Hunter</Family>
+            <Given xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Peter</Given>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n19">
+            <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://imc.org/vCard/3.0#internet"/>
+            </rdf:type>
+            <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">p.hunter@auckland.ac.nz</rdf:value>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n18">
+            <Orgname xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Auckland Bioengineering Institute</Orgname>
+            <Orgunit xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">University of Auckland</Orgunit>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n13">
+            <N xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n20"/>
+            </N>
+            <ORG xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n21"/>
+            </ORG>
+            <EMAIL xmlns="http://www.w3.org/2001/vcard-rdf/3.0#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n22"/>
+            </EMAIL>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n20">
+            <Family xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Crampin</Family>
+            <Given xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Edmund</Given>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n22">
+            <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://imc.org/vCard/3.0#internet"/>
+            </rdf:type>
+            <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">e.crampin@auckland.ac.nz</rdf:value>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n21">
+            <Orgname xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Auckland Bioengineering Institute</Orgname>
+            <Orgunit xmlns="http://www.w3.org/2001/vcard-rdf/3.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">University of Auckland</Orgunit>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n9">
+            <title xmlns="http://purl.org/dc/elements/1.1/" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Biophysical Journal</title>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n10">
+            <W3CDTF xmlns="http://purl.org/dc/terms/" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">2009-03-18 00:00</W3CDTF>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n6">
+            <subject xmlns="http://purl.org/dc/elements/1.1/">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n23"/>
+            </subject>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n23">
+            <rdf:value xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n24"/>
+            </rdf:value>
+            <subject_type xmlns="http://www.cellml.org/bqs/1.0#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">keyword</subject_type>
+        </rdf:Description>
+        <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:nodeID="n24">
+            <rdf:type xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+                <rdf:Description xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" rdf:about="http://www.w3.org/1999/02/22-rdf-syntax-ns#Bag"/>
+            </rdf:type>
+            <rdf:_1 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Signal Transduction</rdf:_1>
+            <rdf:_2 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Calcium Dynamics</rdf:_2>
+            <rdf:_3 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Gene Regulation</rdf:_3>
+            <rdf:_4 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">Excitation-Transcription Coupling</rdf:_4>
+            <rdf:_5 xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xml:lang="en" xmlns:xml="http://www.w3.org/XML/1998/namespace">NFAT</rdf:_5>
+        </rdf:Description>
+    </rdf:RDF>
+</model>

@@ -1,0 +1,95 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="receptor_activation" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
+    <!--
+*******************************************************
+***         U   N   I   T   S                       ***
+*******************************************************
+-->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="per_uM_per_s">
+        <unit exponent="-1" units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+*********************************************************
+***       C   O   M   P   O   N   E   N   T   S       ***
+*********************************************************
+-->
+    <component name="environment">
+        <variable name="t" public_interface="out" units="s"/>
+    </component>
+    <component name="receptor_activation">
+        <variable name="t" public_interface="in" units="second"/>
+        <variable name="J_HGDL4" public_interface="out" units="uM_per_s"/>
+        <variable initial_value="0.02" name="k_f12" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.02" name="k_r12" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1052" name="HG" public_interface="out" units="uM"/>
+        <variable initial_value="0.1" name="DL4" units="uM"/>
+        <variable initial_value="0" name="HGDL4" public_interface="out" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J_HGDL4</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f12</ci>
+                        <ci>DL4</ci>
+                        <ci>HG</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r12</ci>
+                        <ci>HGDL4</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>HG</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J_HGDL4</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>DL4</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J_HGDL4</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection>
+        <map_components component_1="receptor_activation" component_2="environment"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+</model>

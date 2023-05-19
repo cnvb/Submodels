@@ -1,0 +1,148 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model name="Cytokine_release" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <import xlink:href="NFATMyocyte_Tomida_Protocol_Submodel.cellml">
+        <component component_ref="geometry" name="geometry"/>
+    </import>
+    <!--
+*******************************************************
+***         U   N   I   T   S                       ***
+*******************************************************
+-->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+*********************************************************
+***       C   O   M   P   O   N   E   N   T   S       ***
+*********************************************************
+-->
+    <component name="environment">
+        <variable name="t" public_interface="out" units="s"/>
+    </component>
+    <component name="NFAT_Cytokines">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="NFATN_n" public_interface="in" units="uM"/>
+        <variable name="J_NFATNn" public_interface="in" units="uM_per_s"/>
+        <variable name="J5" units="uM_per_s"/>
+        <variable name="J6" units="uM_per_s"/>
+        <variable name="J19" units="uM_per_s"/>
+        <variable name="J20" units="uM_per_s"/>
+        <variable initial_value="0.0683688" name="k_f5" public_interface="out" units="per_s"/>
+        <variable initial_value="23.1163" name="k_f6" public_interface="out" units="per_s"/>
+        <variable initial_value="0" name="IFN" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="TNF" public_interface="out" units="uM"/>
+        <variable initial_value="0.0291491" name="k_f19" public_interface="out" units="per_s"/>
+        <variable initial_value="9.78575e-07" name="k_f20" public_interface="out" units="per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J5</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f5</ci>
+                    <ci>NFATN_n</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J6</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f6</ci>
+                    <ci>NFATN_n</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J19</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f19</ci>
+                    <ci>TNF</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J20</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f20</ci>
+                    <ci>IFN</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NFATN_n</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>J_NFATNn</ci>
+                        <ci>J5</ci>
+                    </apply>
+                    <ci>J6</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>IFN</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J5</ci>
+                    <ci>J20</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>TNF</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J6</ci>
+                    <ci>J19</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <connection>
+        <map_components component_1="environment" component_2="geometry"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="environment" component_2="NFAT_Cytokines"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="geometry" component_2="NFAT_Cytokines"/>
+        <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
+        <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
+    </connection>
+</model>

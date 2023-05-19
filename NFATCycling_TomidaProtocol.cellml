@@ -1,0 +1,230 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<model cmeta:id="NFATCycling" name="NFATCycling" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#">
+    <!--
+*******************************************************
+***         U   N   I   T   S                       ***
+*******************************************************
+-->
+    <units name="s">
+        <unit units="second"/>
+    </units>
+    <units name="uM">
+        <unit prefix="micro" units="mole"/>
+        <unit exponent="-1" units="liter"/>
+    </units>
+    <units name="per_s">
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="uM_per_s">
+        <unit units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <units name="per_uM_s">
+        <unit exponent="-1" units="uM"/>
+        <unit exponent="-1" units="s"/>
+    </units>
+    <!--
+*********************************************************
+***       C   O   M   P   O   N   E   N   T   S       ***
+*********************************************************
+-->
+    <component name="NFAT_Cycling">
+        <!--        var k_f1: per_uM_s {init: 7.68934e-3, priv: out};
+        var k_f2: per_s {init: 0.00144192, priv: out};
+        var k_f3: per_s {init: 0.000361944, priv: out};
+        var k_f4: per_s {init: 0.000444695, priv: out};
+        var k_r1: per_s {init: 0.019256, priv: out};
+        var k_r3: per_uM_s {init: 0.0470813, priv: out};
+        var k_f1: per_uM_s {priv: in, pub: out};
+        var k_f2: per_s {priv: in};
+        var k_f3: per_s {priv: in};
+        var k_f4: per_s {priv: in};
+        var k_r1: per_s {priv: in};
+        var k_r3: per_uM_s {priv: in};-->
+        <variable name="NFATp_n" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="NFATp_c" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="NFATN_n" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="NFATN_c" private_interface="in" public_interface="out" units="uM"/>
+        <variable name="act_N" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="Ntot" private_interface="out" public_interface="in" units="uM"/>
+        <variable name="Ccn" private_interface="out" public_interface="in" units="dimensionless"/>
+        <variable name="t" private_interface="out" public_interface="in" units="s"/>
+        <variable name="J_NFATNn" private_interface="in" public_interface="out" units="uM_per_s"/>
+    </component>
+    <component name="NFAT_Cycling_equations">
+        <variable name="J1" units="uM_per_s"/>
+        <variable name="J2" units="uM_per_s"/>
+        <variable name="J3" units="uM_per_s"/>
+        <variable name="J4" units="uM_per_s"/>
+        <variable name="k_f1" public_interface="in" units="per_uM_s"/>
+        <variable name="k_f2" public_interface="in" units="per_s"/>
+        <variable name="k_f3" public_interface="in" units="per_s"/>
+        <variable name="k_f4" public_interface="in" units="per_s"/>
+        <variable name="k_r1" public_interface="in" units="per_s"/>
+        <variable name="k_r3" public_interface="in" units="per_uM_s"/>
+        <variable initial_value="0.0" name="NFATp_n" public_interface="out" units="uM"/>
+        <variable initial_value="0.9957805651" name="NFATp_c" public_interface="out" units="uM"/>
+        <variable initial_value="0.0" name="NFATN_n" public_interface="out" units="uM"/>
+        <variable initial_value="0.0" name="NFATN_c" public_interface="out" units="uM"/>
+        <variable name="act_N" public_interface="in" units="dimensionless"/>
+        <variable name="Ntot" public_interface="in" units="uM"/>
+        <variable name="Ccn" public_interface="in" units="dimensionless"/>
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="J_NFATNn" public_interface="out" units="uM_per_s"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J1</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f1</ci>
+                        <ci>NFATp_c</ci>
+                        <ci>Ntot</ci>
+                        <ci>act_N</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r1</ci>
+                        <ci>NFATN_c</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>act_N</ci>
+                        </apply>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J2</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f2</ci>
+                    <ci>NFATN_c</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J3</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f3</ci>
+                        <ci>NFATN_n</ci>
+                        <apply>
+                            <minus/>
+                            <cn cellml:units="dimensionless">1</cn>
+                            <ci>act_N</ci>
+                        </apply>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r3</ci>
+                        <ci>NFATp_n</ci>
+                        <ci>Ntot</ci>
+                        <ci>act_N</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J4</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f4</ci>
+                    <ci>NFATp_n</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J_NFATNn</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>J2</ci>
+                        <ci>Ccn</ci>
+                    </apply>
+                    <ci>J3</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NFATp_c</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <divide/>
+                        <ci>J4</ci>
+                        <ci>Ccn</ci>
+                    </apply>
+                    <ci>J1</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NFATN_c</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J1</ci>
+                    <ci>J2</ci>
+                </apply>
+            </apply>
+            <!--ode(NFATN_n, t) = J_NFATNn;-->
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>NFATp_n</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J3</ci>
+                    <ci>J4</ci>
+                </apply>
+            </apply>
+        </math>
+    </component>
+    <group>
+        <relationship_ref relationship="encapsulation"/>
+        <component_ref component="NFAT_Cycling">
+            <component_ref component="NFAT_Cycling_equations"/>
+        </component_ref>
+    </group>
+    <connection>
+        <map_components component_1="NFAT_Cycling" component_2="NFAT_Cycling_equations"/>
+        <!--        vars k_f1 and k_f1;
+        vars k_f2 and k_f2;
+        vars k_f3 and k_f3;
+        vars k_f4 and k_f4;
+        vars k_r1 and k_r1;
+        vars k_r3 and k_r3;-->
+        <map_variables variable_1="NFATp_n" variable_2="NFATp_n"/>
+        <map_variables variable_1="NFATp_c" variable_2="NFATp_c"/>
+        <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
+        <map_variables variable_1="NFATN_c" variable_2="NFATN_c"/>
+        <map_variables variable_1="act_N" variable_2="act_N"/>
+        <map_variables variable_1="Ntot" variable_2="Ntot"/>
+        <map_variables variable_1="Ccn" variable_2="Ccn"/>
+        <map_variables variable_1="t" variable_2="t"/>
+        <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
+    </connection>
+</model>
