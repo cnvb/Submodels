@@ -17,6 +17,7 @@
 ***       C   O   M   P   O   N   E   N   T   S       ***
 *********************************************************
 -->
+    <!--passing J_IP3Ca here-->
     <component name="calcineurin">
         <variable initial_value="1" name="Ntot" public_interface="out" units="uM"/>
         <variable initial_value="6" name="M" public_interface="out" units="uM"/>
@@ -26,6 +27,7 @@
         <variable name="act_N" public_interface="out" units="dimensionless"/>
         <variable initial_value="1.760" name="K_dN" public_interface="out" units="uM"/>
         <variable name="t" public_interface="in" units="s"/>
+        <variable name="J_IP3" public_interface="in" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -34,14 +36,14 @@
                     <divide/>
                     <apply>
                         <power/>
-                        <ci>Ca</ci>
+                        <ci>J_IP3</ci>
                         <ci>n</ci>
                     </apply>
                     <apply>
                         <plus/>
                         <apply>
                             <power/>
-                            <ci>Ca</ci>
+                            <ci>J_IP3</ci>
                             <ci>n</ci>
                         </apply>
                         <apply>

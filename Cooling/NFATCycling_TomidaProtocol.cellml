@@ -29,18 +29,12 @@
 *********************************************************
 -->
     <component name="NFAT_Cycling">
-        <!--        var k_f1: per_uM_s {init: 7.68934e-3, priv: out};
-        var k_f2: per_s {init: 0.00144192, priv: out};
-        var k_f3: per_s {init: 0.000361944, priv: out};
-        var k_f4: per_s {init: 0.000444695, priv: out};
-        var k_r1: per_s {init: 0.019256, priv: out};
-        var k_r3: per_uM_s {init: 0.0470813, priv: out};
-        var k_f1: per_uM_s {priv: in, pub: out};
-        var k_f2: per_s {priv: in};
-        var k_f3: per_s {priv: in};
-        var k_f4: per_s {priv: in};
-        var k_r1: per_s {priv: in};
-        var k_r3: per_uM_s {priv: in};-->
+        <variable initial_value="7.68934e-3" name="k_f1" private_interface="out" units="per_uM_s"/>
+        <variable initial_value="0.00144192" name="k_f2" private_interface="out" units="per_s"/>
+        <variable initial_value="0.000361944" name="k_f3" private_interface="out" units="per_s"/>
+        <variable initial_value="0.000444695" name="k_f4" private_interface="out" units="per_s"/>
+        <variable initial_value="0.019256" name="k_r1" private_interface="out" units="per_s"/>
+        <variable initial_value="0.0470813" name="k_r3" private_interface="out" units="per_uM_s"/>
         <variable name="NFATp_n" private_interface="in" public_interface="out" units="uM"/>
         <variable name="NFATp_c" private_interface="in" public_interface="out" units="uM"/>
         <variable name="NFATN_n" private_interface="in" public_interface="out" units="uM"/>
@@ -211,12 +205,12 @@
     </group>
     <connection>
         <map_components component_1="NFAT_Cycling" component_2="NFAT_Cycling_equations"/>
-        <!--        vars k_f1 and k_f1;
-        vars k_f2 and k_f2;
-        vars k_f3 and k_f3;
-        vars k_f4 and k_f4;
-        vars k_r1 and k_r1;
-        vars k_r3 and k_r3;-->
+        <map_variables variable_1="k_f1" variable_2="k_f1"/>
+        <map_variables variable_1="k_f2" variable_2="k_f2"/>
+        <map_variables variable_1="k_f3" variable_2="k_f3"/>
+        <map_variables variable_1="k_f4" variable_2="k_f4"/>
+        <map_variables variable_1="k_r1" variable_2="k_r1"/>
+        <map_variables variable_1="k_r3" variable_2="k_r3"/>
         <map_variables variable_1="NFATp_n" variable_2="NFATp_n"/>
         <map_variables variable_1="NFATp_c" variable_2="NFATp_c"/>
         <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
