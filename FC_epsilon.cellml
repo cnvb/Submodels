@@ -32,7 +32,7 @@
         <variable name="t" public_interface="out" units="s"/>
     </component>
     <component name="FCepsilonRI">
-        <variable name="t" public_interface="in" units="second"/>
+        <variable name="t" public_interface="in" units="s"/>
         <variable name="J1" public_interface="out" units="uM_per_s"/>
         <variable name="J2" units="uM_per_s"/>
         <variable name="J3" units="uM_per_s"/>
@@ -41,29 +41,28 @@
         <variable name="J6" units="uM_per_s"/>
         <variable name="J7" public_interface="out" units="uM_per_s"/>
         <variable initial_value="0" name="Lyn" units="uM"/>
-        <variable initial_value="0.0474" name="FC" public_interface="in" units="uM"/>
-        <variable initial_value="0" name="pFC" units="uM"/>
-        <variable initial_value="0.025" name="Syk" units="uM"/>
+        <variable name="FC" public_interface="in" units="uM"/>
+        <variable initial_value="0" name="phGdl4FC" units="uM"/>
+        <variable initial_value="0.005" name="Syk" units="uM"/>
         <variable initial_value="0" name="pSyk" units="uM"/>
         <variable initial_value="0" name="pGrb2" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="pHGDL4_FCLyn" units="uM"/>
-        <variable initial_value="0" name="pHGDL4_FCSyk" units="uM"/>
+        <variable initial_value="0" name="phGdl4FCLyn" units="uM"/>
+        <variable initial_value="0" name="phGdl4FCSyk" units="uM"/>
         <variable initial_value="0" name="pSykGrb2" units="uM"/>
-        <variable initial_value="0.403" name="Pi" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="pHGDL4_FC" units="uM"/>
-        <variable name="HGDL4_FC" public_interface="in" units="uM"/>
-        <variable initial_value="0.01" name="Grb2" units="uM"/>
-        <variable initial_value="0.0474" name="pLyn" units="uM"/>
-        <variable initial_value="54.77" name="k_f1" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.0031" name="k_r1" public_interface="out" units="per_s"/>
+        <variable initial_value="0.4027" name="Pi" public_interface="out" units="uM"/>
+        <variable initial_value="6.47" name="Grb2" units="uM"/>
+        <variable name="hGdl4FC" public_interface="in" units="uM"/>
+        <variable initial_value="6.5" name="pLyn" units="uM"/>
+        <variable name="k_f1" public_interface="in" units="per_uM_per_s"/>
+        <variable name="k_r1" public_interface="in" units="per_s"/>
         <variable initial_value="0.00817889" name="k_f2" public_interface="out" units="per_s"/>
-        <variable initial_value="0.0035" name="k_f3" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="10.58" name="k_f4" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.117" name="k_r4" public_interface="out" units="per_s"/>
-        <variable initial_value="33.72" name="k_f5" public_interface="out" units="per_s"/>
-        <variable initial_value="0.414" name="k_f6" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.481" name="k_r6" public_interface="out" units="per_s"/>
-        <variable initial_value="11.42" name="k_f7" public_interface="out" units="per_s"/>
+        <variable initial_value="1.0887" name="k_f3" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="10.5797" name="k_f4" public_interface="out" units="per_uM_per_s"/>
+        <variable name="k_r4" public_interface="in" units="per_s"/>
+        <variable name="k_f5" public_interface="in" units="per_s"/>
+        <variable initial_value="0.414288" name="k_f6" public_interface="out" units="per_uM_per_s"/>
+        <variable name="k_r6" public_interface="in" units="per_s"/>
+        <variable initial_value="11.4185" name="k_f7" public_interface="out" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -73,13 +72,13 @@
                     <apply>
                         <times/>
                         <ci>k_f1</ci>
-                        <ci>HGDL4_FC</ci>
+                        <ci>hGdl4FC</ci>
                         <ci>pLyn</ci>
                     </apply>
                     <apply>
                         <times/>
                         <ci>k_r1</ci>
-                        <ci>pHGDL4_FCLyn</ci>
+                        <ci>phGdl4FCLyn</ci>
                     </apply>
                 </apply>
             </apply>
@@ -89,7 +88,7 @@
                 <apply>
                     <times/>
                     <ci>k_f2</ci>
-                    <ci>pHGDL4_FCLyn</ci>
+                    <ci>phGdl4FCLyn</ci>
                 </apply>
             </apply>
             <apply>
@@ -110,13 +109,13 @@
                     <apply>
                         <times/>
                         <ci>k_f4</ci>
-                        <ci>pHGDL4_FC</ci>
+                        <ci>phGdl4FC</ci>
                         <ci>Syk</ci>
                     </apply>
                     <apply>
                         <times/>
                         <ci>k_r4</ci>
-                        <ci>pHGDL4_FCSyk</ci>
+                        <ci>phGdl4FCSyk</ci>
                     </apply>
                 </apply>
             </apply>
@@ -126,7 +125,7 @@
                 <apply>
                     <times/>
                     <ci>k_f5</ci>
-                    <ci>pHGDL4_FCSyk</ci>
+                    <ci>phGdl4FCSyk</ci>
                 </apply>
             </apply>
             <apply>
@@ -156,6 +155,7 @@
                     <ci>pSykGrb2</ci>
                 </apply>
             </apply>
+            <!--        ode(FC, t) = -J1+J5;-->
             <apply>
                 <eq/>
                 <apply>
@@ -163,25 +163,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>FC</ci>
-                </apply>
-                <apply>
-                    <plus/>
-                    <apply>
-                        <minus/>
-                        <ci>J1</ci>
-                    </apply>
-                    <ci>J5</ci>
-                </apply>
-            </apply>
-            <apply>
-                <eq/>
-                <apply>
-                    <diff/>
-                    <bvar>
-                        <ci>t</ci>
-                    </bvar>
-                    <ci>pHGDL4_FC</ci>
+                    <ci>phGdl4FC</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -262,7 +244,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>pHGDL4_FCLyn</ci>
+                    <ci>phGdl4FCLyn</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -277,7 +259,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>pHGDL4_FCSyk</ci>
+                    <ci>phGdl4FCSyk</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -314,18 +296,8 @@
                     <ci>J6</ci>
                 </apply>
             </apply>
-            <apply>
-                <eq/>
-                <apply>
-                    <diff/>
-                    <bvar>
-                        <ci>t</ci>
-                    </bvar>
-                    <ci>pGrb2</ci>
-                </apply>
-                <ci>J7</ci>
-            </apply>
         </math>
+        <!--        ode(pGrb2, t) = J7;-->
     </component>
     <connection>
         <map_components component_1="environment" component_2="FCepsilonRI"/>

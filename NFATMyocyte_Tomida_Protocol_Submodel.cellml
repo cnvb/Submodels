@@ -1,12 +1,12 @@
 <?xml version='1.0' encoding='UTF-8'?>
 <model cmeta:id="NFATMyocyte_TomidaProtocol" name="NFATMyocyte_Tomida_Protocol" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:cmeta="http://www.cellml.org/metadata/1.0#" xmlns:xlink="http://www.w3.org/1999/xlink">
-    <import xlink:href="New_folder/calcium_Tomida_Protocol.cellml">
+    <import xlink:href="Cooling/calcium_Tomida_Protocol.cellml">
         <component component_ref="calcium" name="calcium"/>
     </import>
-    <import xlink:href="New_folder/calcineurin_Tomida_Protocol.cellml">
+    <import xlink:href="Cooling/calcineurin_Tomida_Protocol.cellml">
         <component component_ref="calcineurin" name="calcineurin"/>
     </import>
-    <import xlink:href="New_folder/NFATCycling_TomidaProtocol.cellml">
+    <import xlink:href="Cooling/NFATCycling_TomidaProtocol.cellml">
         <component component_ref="NFAT_Cycling" name="NFAT_Cycling"/>
         <component component_ref="NFAT_Cycling_equations" name="NFAT_Cycling_equations"/>
     </import>
@@ -41,7 +41,7 @@
     <component name="geometry">
         <variable initial_value="50" name="Ccn" private_interface="out" units="dimensionless"/>
         <variable name="t" private_interface="out" public_interface="in" units="s"/>
-        <variable name="Ca" private_interface="in" units="uM"/>
+        <variable name="Ca" private_interface="in" public_interface="out" units="uM"/>
         <variable name="NFATN_c" private_interface="in" units="uM"/>
         <variable name="NFATN_c_percentage" units="uM"/>
         <variable name="NFATN_n" private_interface="in" public_interface="out" units="uM"/>
@@ -116,9 +116,10 @@
         <map_variables variable_1="NFATN_n" variable_2="NFATN_n"/>
         <map_variables variable_1="J_NFATNn" variable_2="J_NFATNn"/>
     </connection>
-    <!--        def map between calcium and calcineurin for
-            vars Ca and Ca;
-        enddef;-->
+    <connection>
+        <map_components component_1="calcium" component_2="calcineurin"/>
+        <map_variables variable_1="Ca" variable_2="Ca"/>
+    </connection>
     <connection>
         <map_components component_1="calcineurin" component_2="NFAT_Cycling"/>
         <map_variables variable_1="act_N" variable_2="act_N"/>

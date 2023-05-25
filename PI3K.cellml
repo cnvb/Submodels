@@ -132,8 +132,135 @@
             </apply>
         </math>
     </component>
+    <component name="PLC">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="J8" units="uM_per_s"/>
+        <variable initial_value="6" name="k_f8" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.02" name="k_r8" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1052" name="PI3Kstar" public_interface="out" units="uM"/>
+        <variable initial_value="5" name="pip2" units="uM"/>
+        <variable initial_value="0" name="pip3" public_interface="out" units="uM"/>
+        <variable name="J9" units="uM_per_s"/>
+        <variable initial_value="6" name="k_f9" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.02" name="k_r9" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
+        <variable initial_value="5" name="pBtk" units="uM"/>
+        <variable name="J10" units="uM_per_s"/>
+        <variable initial_value="6" name="k_f10" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.02" name="k_r10" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="IP3" public_interface="out" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J8</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f8</ci>
+                        <ci>pip2</ci>
+                        <ci>PI3Kstar</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r8</ci>
+                        <ci>pip3</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J9</ci>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <times/>
+                        <ci>k_f9</ci>
+                        <ci>pip3</ci>
+                        <ci>pBtk</ci>
+                    </apply>
+                    <apply>
+                        <times/>
+                        <ci>k_r9</ci>
+                        <ci>PLC</ci>
+                    </apply>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <ci>J10</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f10</ci>
+                    <ci>PLC</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pip2</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J8</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pip3</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <apply>
+                        <minus/>
+                        <ci>J8</ci>
+                    </apply>
+                    <ci>J9</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>pBtk</ci>
+                </apply>
+                <apply>
+                    <minus/>
+                    <ci>J9</ci>
+                </apply>
+            </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>IP3</ci>
+                </apply>
+                <ci>J10</ci>
+            </apply>
+        </math>
+    </component>
     <connection>
         <map_components component_1="PI3K" component_2="environment"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="PLC" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
 </model>
