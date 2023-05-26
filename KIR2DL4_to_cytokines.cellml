@@ -246,7 +246,7 @@
         <variable name="J8" units="uM_per_s"/>
         <variable initial_value="6" name="k_f8" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r8" public_interface="out" units="per_s"/>
-        <variable initial_value="0.1052" name="PI3Kstar" public_interface="out" units="uM"/>
+        <variable initial_value="0.1052" name="PI3Kstar" public_interface="in" units="uM"/>
         <variable initial_value="5" name="pip2" units="uM"/>
         <variable initial_value="0" name="pip3" public_interface="out" units="uM"/>
         <variable name="J9" units="uM_per_s"/>
@@ -258,7 +258,7 @@
         <variable initial_value="6" name="k_f10" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r10" public_interface="out" units="per_s"/>
         <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="IP3" public_interface="out" units="uM"/>
+        <variable initial_value="2" name="IP3" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -600,6 +600,10 @@
         <map_components component_1="PI3K" component_2="FCepsilonRI"/>
         <map_variables variable_1="J7" variable_2="J7"/>
         <map_variables variable_1="pGrb2" variable_2="pGrb2"/>
+    </connection>
+    <connection>
+        <map_components component_1="PI3K" component_2="PLC"/>
+        <map_variables variable_1="PI3Kstar" variable_2="PI3Kstar"/>
     </connection>
     <connection>
         <map_components component_1="PI3K" component_2="IP3"/>
