@@ -34,16 +34,29 @@
     <component name="PI3K">
         <variable name="t" public_interface="in" units="s"/>
         <variable name="J5" units="uM_per_s"/>
-        <variable name="J6" public_interface="out" units="uM_per_s"/>
-        <variable name="J7" public_interface="in" units="uM_per_s"/>
-        <variable name="pGrb2" public_interface="in" units="uM"/>
-        <variable initial_value="0.01" name="PI3K" units="uM"/>
-        <variable initial_value="0" name="PI3Kstar" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="pGrb2PI3K" units="uM"/>
-        <variable initial_value="7.5" name="k_f5" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.005" name="k_r5" public_interface="out" units="per_s"/>
-        <variable initial_value="10.1" name="k_f6" public_interface="out" units="per_s"/>
+        <variable name="J7" units="uM_per_s"/>
+        <variable initial_value="6" name="k_f5" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.9887" name="k_r5" units="per_s"/>
+        <variable initial_value="0.342324324" name="PI3K" units="uM"/>
+        <variable initial_value="9.8732743" name="pGrb2" units="uM"/>
+        <variable initial_value="49.03432" name="pGrb2PI3K" units="uM"/>
+        <variable name="J6" units="uM_per_s"/>
+        <variable initial_value="6" name="k_f6" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.342324324" name="PI3Kstar" public_interface="out" units="uM"/>
+        <variable initial_value="9.8732743" name="pGrb2PI3K" units="uM"/>
+        <variable initial_value="9.8732743" name="pGrb2" units="uM"/>
+        <variable initial_value="0.3823923" name="k_f7" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="8.789798" name="pSykGrb2" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J6</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f6</ci>
+                    <ci>pGrb2PI3K</ci>
+                </apply>
+            </apply>
             <apply>
                 <eq/>
                 <ci>J5</ci>
@@ -52,8 +65,8 @@
                     <apply>
                         <times/>
                         <ci>k_f5</ci>
-                        <ci>pGrb2</ci>
                         <ci>PI3K</ci>
+                        <ci>pGrb2</ci>
                     </apply>
                     <apply>
                         <times/>
@@ -64,11 +77,11 @@
             </apply>
             <apply>
                 <eq/>
-                <ci>J6</ci>
+                <ci>J7</ci>
                 <apply>
                     <times/>
-                    <ci>k_f6</ci>
-                    <ci>pGrb2PI3K</ci>
+                    <ci>k_f7</ci>
+                    <ci>pSykGrb2</ci>
                 </apply>
             </apply>
             <apply>
@@ -111,21 +124,6 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>pGrb2PI3K</ci>
-                </apply>
-                <apply>
-                    <minus/>
-                    <ci>J5</ci>
-                    <ci>J6</ci>
-                </apply>
-            </apply>
-            <apply>
-                <eq/>
-                <apply>
-                    <diff/>
-                    <bvar>
-                        <ci>t</ci>
-                    </bvar>
                     <ci>PI3Kstar</ci>
                 </apply>
                 <ci>J6</ci>
@@ -137,7 +135,7 @@
         <variable name="J8" units="uM_per_s"/>
         <variable initial_value="6" name="k_f8" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r8" public_interface="out" units="per_s"/>
-        <variable initial_value="0.1052" name="PI3Kstar" public_interface="out" units="uM"/>
+        <variable initial_value="0.74938" name="PI3Kstar" public_interface="in" units="uM"/>
         <variable initial_value="5" name="pip2" units="uM"/>
         <variable initial_value="0" name="pip3" public_interface="out" units="uM"/>
         <variable name="J9" units="uM_per_s"/>
@@ -145,11 +143,6 @@
         <variable initial_value="0.02" name="k_r9" public_interface="out" units="per_s"/>
         <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
         <variable initial_value="5" name="pBtk" units="uM"/>
-        <variable name="J10" units="uM_per_s"/>
-        <variable initial_value="6" name="k_f10" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.02" name="k_r10" public_interface="out" units="per_s"/>
-        <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="IP3" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -185,15 +178,6 @@
                         <ci>k_r9</ci>
                         <ci>PLC</ci>
                     </apply>
-                </apply>
-            </apply>
-            <apply>
-                <eq/>
-                <ci>J10</ci>
-                <apply>
-                    <times/>
-                    <ci>k_f10</ci>
-                    <ci>PLC</ci>
                 </apply>
             </apply>
             <apply>
@@ -242,6 +226,25 @@
                     <ci>J9</ci>
                 </apply>
             </apply>
+        </math>
+    </component>
+    <component name="IP3">
+        <variable name="t" public_interface="in" units="s"/>
+        <variable name="J_IP3" units="uM_per_s"/>
+        <variable initial_value="6" name="k_f10" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.02" name="k_r10" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1052" name="PLC" public_interface="in" units="uM"/>
+        <variable initial_value="0" name="IP3" public_interface="out" units="uM"/>
+        <math xmlns="http://www.w3.org/1998/Math/MathML">
+            <apply>
+                <eq/>
+                <ci>J_IP3</ci>
+                <apply>
+                    <times/>
+                    <ci>k_f10</ci>
+                    <ci>PLC</ci>
+                </apply>
+            </apply>
             <apply>
                 <eq/>
                 <apply>
@@ -251,16 +254,28 @@
                     </bvar>
                     <ci>IP3</ci>
                 </apply>
-                <ci>J10</ci>
+                <ci>J_IP3</ci>
             </apply>
         </math>
     </component>
+    <connection>
+        <map_components component_1="environment" component_2="IP3"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="environment" component_2="PLC"/>
+        <map_variables variable_1="t" variable_2="t"/>
+    </connection>
+    <connection>
+        <map_components component_1="IP3" component_2="PLC"/>
+        <map_variables variable_1="PLC" variable_2="PLC"/>
+    </connection>
     <connection>
         <map_components component_1="PI3K" component_2="environment"/>
         <map_variables variable_1="t" variable_2="t"/>
     </connection>
     <connection>
-        <map_components component_1="PLC" component_2="environment"/>
-        <map_variables variable_1="t" variable_2="t"/>
+        <map_components component_1="PI3K" component_2="PLC"/>
+        <map_variables variable_1="PI3Kstar" variable_2="PI3Kstar"/>
     </connection>
 </model>
