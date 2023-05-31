@@ -249,7 +249,7 @@
         <variable initial_value="0.1052" name="PI3Kstar" public_interface="in" units="uM"/>
         <variable initial_value="5" name="pip2" units="uM"/>
         <variable initial_value="0" name="pip3" public_interface="out" units="uM"/>
-        <variable name="J9" units="uM_per_s"/>
+        <variable name="J9" public_interface="out" units="uM_per_s"/>
         <variable initial_value="6" name="k_f9" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r9" public_interface="out" units="per_s"/>
         <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
@@ -362,14 +362,26 @@
                 </apply>
                 <ci>J10</ci>
             </apply>
+            <apply>
+                <eq/>
+                <apply>
+                    <diff/>
+                    <bvar>
+                        <ci>t</ci>
+                    </bvar>
+                    <ci>PLC</ci>
+                </apply>
+                <ci>J9</ci>
+            </apply>
         </math>
     </component>
     <component name="IP3">
         <variable name="t" public_interface="in" units="s"/>
-        <variable name="PI3Kstar" public_interface="in" units="uM"/>
+        <!--        var PI3Kstar: uM {pub: in};-->
         <variable initial_value="0.00647734" name="kf11" units="per_s"/>
         <variable initial_value="2" name="IP3" public_interface="out" units="uM"/>
         <variable name="J_IP3" public_interface="in" units="uM"/>
+        <variable name="J9" public_interface="in" units="uM_per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -385,7 +397,7 @@
                     <apply>
                         <times/>
                         <ci>kf11</ci>
-                        <ci>PI3Kstar</ci>
+                        <ci>J9</ci>
                     </apply>
                     <ci>J_IP3</ci>
                 </apply>
@@ -605,9 +617,12 @@
         <map_components component_1="PI3K" component_2="PLC"/>
         <map_variables variable_1="PI3Kstar" variable_2="PI3Kstar"/>
     </connection>
+    <!--    def map between PI3K and IP3 for
+        vars PI3Kstar and PI3Kstar;
+    enddef;-->
     <connection>
-        <map_components component_1="PI3K" component_2="IP3"/>
-        <map_variables variable_1="PI3Kstar" variable_2="PI3Kstar"/>
+        <map_components component_1="PLC" component_2="IP3"/>
+        <map_variables variable_1="J9" variable_2="J9"/>
     </connection>
     <connection>
         <map_components component_1="IP3" component_2="IP3_Ca"/>
