@@ -138,7 +138,7 @@
         <variable initial_value="0.74938" name="PI3Kstar" public_interface="in" units="uM"/>
         <variable initial_value="5" name="pip2" units="uM"/>
         <variable initial_value="0" name="pip3" public_interface="out" units="uM"/>
-        <variable name="J9" units="uM_per_s"/>
+        <variable name="J9" public_interface="out" units="uM_per_s"/>
         <variable initial_value="6" name="k_f9" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r9" public_interface="out" units="per_s"/>
         <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
@@ -226,25 +226,6 @@
                     <ci>J9</ci>
                 </apply>
             </apply>
-        </math>
-    </component>
-    <component name="IP3">
-        <variable name="t" public_interface="in" units="s"/>
-        <variable name="J_IP3" units="uM_per_s"/>
-        <variable initial_value="6" name="k_f10" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.02" name="k_r10" public_interface="out" units="per_s"/>
-        <variable initial_value="0.1052" name="PLC" public_interface="in" units="uM"/>
-        <variable initial_value="0" name="IP3" public_interface="out" units="uM"/>
-        <math xmlns="http://www.w3.org/1998/Math/MathML">
-            <apply>
-                <eq/>
-                <ci>J_IP3</ci>
-                <apply>
-                    <times/>
-                    <ci>k_f10</ci>
-                    <ci>PLC</ci>
-                </apply>
-            </apply>
             <apply>
                 <eq/>
                 <apply>
@@ -252,16 +233,25 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>IP3</ci>
+                    <ci>PLC</ci>
                 </apply>
-                <ci>J_IP3</ci>
+                <ci>J9</ci>
             </apply>
         </math>
     </component>
-    <connection>
-        <map_components component_1="environment" component_2="IP3"/>
-        <map_variables variable_1="t" variable_2="t"/>
-    </connection>
+    <!--    def comp IP3 as
+        var t: s {pub: in};
+        var J_IP3: uM_per_s;
+        var k_f10: per_uM_per_s {init: 6, pub: out};
+        var k_r10: per_s {init: 0.02, pub: out};
+        var PLC: uM {init: 0.1052, pub: in};
+        var IP3: uM {init: 0, pub: out};-->
+    <!--        J_IP3 = k_f10*PLC;
+        ode(IP3, t) = J_IP3;
+    enddef;-->
+    <!--    def map between environment and IP3 for
+        vars t and t;
+    enddef;-->
     <connection>
         <map_components component_1="environment" component_2="PLC"/>
         <map_variables variable_1="t" variable_2="t"/>

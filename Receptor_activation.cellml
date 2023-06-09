@@ -34,9 +34,9 @@
     <component name="receptor_activation">
         <variable name="t" public_interface="in" units="second"/>
         <variable name="J_HGDL4" public_interface="out" units="uM_per_s"/>
-        <variable initial_value="6" name="k_f12" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.02" name="k_r12" public_interface="out" units="per_s"/>
-        <variable initial_value="0.1052" name="HG" public_interface="out" units="uM"/>
+        <variable initial_value="0.025712" name="k_f12" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.0295" name="k_r12" public_interface="out" units="per_s"/>
+        <variable initial_value="0.1059" name="HG" public_interface="out" units="uM"/>
         <variable initial_value="5" name="DL4" units="uM"/>
         <variable initial_value="0" name="HGDL4" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
