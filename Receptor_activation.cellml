@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0'?>
 <model name="receptor_activation" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#">
     <!--
 *******************************************************
@@ -33,16 +33,16 @@
     </component>
     <component name="receptor_activation">
         <variable name="t" public_interface="in" units="second"/>
-        <variable name="J_HGDL4" public_interface="out" units="uM_per_s"/>
+        <variable name="J_hGdl4" public_interface="out" units="uM_per_s"/>
         <variable initial_value="0.025712" name="k_f12" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.0295" name="k_r12" public_interface="out" units="per_s"/>
         <variable initial_value="0.1059" name="HG" public_interface="out" units="uM"/>
         <variable initial_value="5" name="DL4" units="uM"/>
-        <variable initial_value="0" name="HGDL4" public_interface="out" units="uM"/>
+        <variable initial_value="0" name="hGdl4" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
-                <ci>J_HGDL4</ci>
+                <ci>J_hGdl4</ci>
                 <apply>
                     <minus/>
                     <apply>
@@ -54,7 +54,7 @@
                     <apply>
                         <times/>
                         <ci>k_r12</ci>
-                        <ci>HGDL4</ci>
+                        <ci>hGdl4</ci>
                     </apply>
                 </apply>
             </apply>
@@ -69,7 +69,7 @@
                 </apply>
                 <apply>
                     <minus/>
-                    <ci>J_HGDL4</ci>
+                    <ci>J_hGdl4</ci>
                 </apply>
             </apply>
             <apply>
@@ -83,7 +83,7 @@
                 </apply>
                 <apply>
                     <minus/>
-                    <ci>J_HGDL4</ci>
+                    <ci>J_hGdl4</ci>
                 </apply>
             </apply>
         </math>
