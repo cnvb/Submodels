@@ -1,4 +1,4 @@
-<?xml version='1.0' encoding='UTF-8'?>
+<?xml version='1.0'?>
 <model name="KIR2DL4_to_cytokines" xmlns="http://www.cellml.org/cellml/1.1#" xmlns:cellml="http://www.cellml.org/cellml/1.1#" xmlns:xlink="http://www.w3.org/1999/xlink">
     <import xlink:href="Receptor_activation.cellml">
         <component component_ref="receptor_activation" name="receptor_activation"/>
@@ -72,8 +72,8 @@
         <variable initial_value="1" name="FC" public_interface="out" units="uM"/>
         <variable initial_value="0" name="hGdl4FC" public_interface="out" units="uM"/>
         <variable initial_value="0" name="HGDL4" units="uM"/>
-        <variable initial_value="0.015790" name="k_f21" units="per_uM_per_s"/>
-        <variable initial_value="0.0467239" name="k_r21" units="per_s"/>
+        <variable initial_value="0.01579" name="k_f21" public_interface="out" units="per_uM_per_s"/>
+        <variable initial_value="0.0467239" name="k_r21" public_interface="out" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -255,12 +255,11 @@
         <variable name="J9" public_interface="out" units="uM_per_s"/>
         <variable initial_value="0.92387" name="k_f9" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02854" name="k_r9" public_interface="out" units="per_s"/>
-        <variable initial_value="0.120" name="PLC" public_interface="out" units="uM"/>
+        <variable initial_value="0.1052" name="PLC" units="uM"/>
         <variable initial_value="6.57783" name="pBtk" units="uM"/>
         <variable name="J10" units="uM_per_s"/>
         <variable initial_value="0.651221" name="k_f10" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.02" name="k_r10" public_interface="out" units="per_s"/>
-        <variable initial_value="0.1052" name="PLC" public_interface="out" units="uM"/>
         <variable initial_value="2" name="IP3" public_interface="out" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
@@ -381,7 +380,7 @@
     <component name="IP3">
         <variable name="t" public_interface="in" units="s"/>
         <!--        var PI3Kstar: uM {pub: in};-->
-        <variable initial_value="0.00647734" name="kf11" units="per_s"/>
+        <variable initial_value="0.00647734" name="kf11" public_interface="out" units="per_s"/>
         <variable initial_value="2" name="IP3" public_interface="out" units="uM"/>
         <variable name="J_IP3" public_interface="in" units="uM"/>
         <variable name="J9" public_interface="in" units="uM_per_s"/>
@@ -452,7 +451,7 @@
         <variable initial_value="0" name="IFN" public_interface="out" units="uM"/>
         <variable initial_value="0" name="TNF" public_interface="out" units="uM"/>
         <variable initial_value="0.0491491" name="k_f19" public_interface="out" units="per_s"/>
-        <variable initial_value="9.58514e-07" name="k_f20" public_interface="out" units="per_s"/>
+        <variable initial_value="9.58514e-7" name="k_f20" public_interface="out" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
