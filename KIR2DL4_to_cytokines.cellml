@@ -60,7 +60,7 @@
         <variable name="pGrb2" public_interface="in" units="uM"/>
         <variable initial_value="0.025712" name="k_f12" public_interface="in" units="per_uM_per_s"/>
         <variable initial_value="0.0295" name="k_r12" public_interface="in" units="per_s"/>
-        <variable name="hGdl4" public_interface="in" units="uM"/>
+        <variable name="HGDL4" public_interface="in" units="uM"/>
     </component>
     <!--many of your parameters in submodels are not mapped to any components-->
     <component name="HGDL4_FC">
@@ -71,7 +71,7 @@
         <variable name="J_hGdl4" public_interface="in" units="uM_per_s"/>
         <variable initial_value="1" name="FC" public_interface="out" units="uM"/>
         <variable initial_value="0" name="hGdl4FC" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="hGdl4" public_interface="in" units="uM"/>
+        <variable initial_value="0" name="HGDL4" public_interface="in" units="uM"/>
         <variable initial_value="0.01579" name="k_f21" public_interface="out" units="per_uM_per_s"/>
         <variable initial_value="0.0467239" name="k_r21" public_interface="out" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
@@ -100,7 +100,7 @@
                     <bvar>
                         <ci>t</ci>
                     </bvar>
-                    <ci>hGdl4</ci>
+                    <ci>HGDL4</ci>
                 </apply>
                 <apply>
                     <minus/>
@@ -415,7 +415,7 @@
         <variable name="IP3" public_interface="in" units="uM"/>
         <variable name="Ca" public_interface="in" units="uM"/>
         <!--        var Ca: uM {init: 0.6};-->
-        <variable initial_value="0" name="IP3Ca" units="uM"/>
+        <variable initial_value="0.99" name="IP3Ca" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -588,7 +588,7 @@
         <map_components component_1="receptor_activation" component_2="dl4cytokines_parameter"/>
         <map_variables variable_1="k_f12" variable_2="k_f12"/>
         <map_variables variable_1="k_r12" variable_2="k_r12"/>
-        <map_variables variable_1="hGdl4" variable_2="hGdl4"/>
+        <map_variables variable_1="HGDL4" variable_2="HGDL4"/>
     </connection>
     <connection>
         <map_components component_1="receptor_activation" component_2="HGDL4_FC"/>
