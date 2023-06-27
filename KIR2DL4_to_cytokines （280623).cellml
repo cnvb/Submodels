@@ -71,12 +71,12 @@
         <variable name="J21" units="uM_per_s"/>
         <variable name="J1" public_interface="in" units="uM_per_s"/>
         <variable name="J5" public_interface="in" units="uM_per_s"/>
-        <variable name="J_hGdl4" public_interface="in" units="uM_per_s"/>
+        <variable name="J_HGDL4" public_interface="in" units="uM_per_s"/>
         <variable initial_value="1" name="FC" public_interface="out" units="uM"/>
         <variable initial_value="0" name="hGdl4FC" public_interface="out" units="uM"/>
-        <variable initial_value="0" name="HGDL4" public_interface="in" units="uM"/>
-        <variable initial_value="0.01579" name="k_f21" public_interface="out" units="per_uM_per_s"/>
-        <variable initial_value="0.0467239" name="k_r21" public_interface="out" units="per_s"/>
+        <variable initial_value="0" name="HGDL4" units="uM"/>
+        <variable initial_value="0.016521" name="k_f21" units="per_uM_per_s"/>
+        <variable initial_value="0.0517365" name="k_r21" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -86,7 +86,7 @@
                     <apply>
                         <times/>
                         <ci>k_f21</ci>
-                        <ci>J_hGdl4</ci>
+                        <ci>J_HGDL4</ci>
                         <ci>FC</ci>
                     </apply>
                     <apply>
@@ -107,7 +107,7 @@
                 </apply>
                 <apply>
                     <minus/>
-                    <ci>J_hGdl4</ci>
+                    <ci>J_HGDL4</ci>
                     <ci>J21</ci>
                 </apply>
             </apply>
@@ -146,6 +146,7 @@
             </apply>
         </math>
     </component>
+    <!--you are missing part after the activation of PI3K -> PLC -> IP3. Here I created a path between PI3Kstar with IP3. Please create the correct path.-->
     <component name="IP3">
         <variable name="t" public_interface="in" units="s"/>
         <variable name="PI3Kstar" public_interface="in" units="uM"/>
@@ -183,7 +184,7 @@
         <variable name="IP3" public_interface="in" units="uM"/>
         <variable name="Ca" public_interface="in" units="uM"/>
         <!--        var Ca: uM {init: 0.6};-->
-        <variable initial_value="0.99" name="IP3Ca" units="uM"/>
+        <variable initial_value="0" name="IP3Ca" units="uM"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -214,12 +215,12 @@
         <variable name="J6" units="uM_per_s"/>
         <variable name="J19" units="uM_per_s"/>
         <variable name="J20" units="uM_per_s"/>
-        <variable initial_value="0.0783563" name="k_f5" units="per_s"/>
-        <variable initial_value="22.8913" name="k_f6" units="per_s"/>
+        <variable initial_value="0.5683688" name="k_f5" units="per_s"/>
+        <variable initial_value="23.1163" name="k_f6" units="per_s"/>
         <variable initial_value="0" name="IFN" units="uM"/>
         <variable initial_value="0" name="TNF" units="uM"/>
-        <variable initial_value="0.0491491" name="k_f19" units="per_s"/>
-        <variable initial_value="9.58514e-7" name="k_f20" units="per_s"/>
+        <variable initial_value="0.0291491" name="k_f19" units="per_s"/>
+        <variable initial_value="9.78575e-07" name="k_f20" units="per_s"/>
         <math xmlns="http://www.w3.org/1998/Math/MathML">
             <apply>
                 <eq/>
@@ -352,7 +353,7 @@
     </connection>
     <connection>
         <map_components component_1="receptor_activation" component_2="HGDL4_FC"/>
-        <map_variables variable_1="J_hGdl4" variable_2="J_hGdl4"/>
+        <map_variables variable_1="J_HGDL4" variable_2="J_HGDL4"/>
     </connection>
     <connection>
         <map_components component_1="HGDL4_FC" component_2="FCepsilonRI"/>
@@ -381,9 +382,6 @@
         <map_variables variable_1="J7" variable_2="J7"/>
         <map_variables variable_1="pGrb2" variable_2="pGrb2"/>
     </connection>
-    <!--    def map between PI3K and PLC for
-        vars PI3Kstar and PI3Kstar;
-  enddef;-->
     <connection>
         <map_components component_1="PI3K" component_2="IP3"/>
         <map_variables variable_1="PI3Kstar" variable_2="PI3Kstar"/>

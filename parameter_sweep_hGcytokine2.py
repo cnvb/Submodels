@@ -8,11 +8,7 @@ from scipy.optimize import curve_fit, minimize,least_squares
 
 import OpenCOR as oc
 
-bounds_dictionary ={'dl4cytokines_parameter/k_f12': [-3,2],
-'dl4cytokines_parameter/k_r12': [-3,2], 'HGDL4_FC/k_f21': [-3,2], 'HGDL4_FC/k_r21': [-3,2], 'PI3K/k_f5': [-3,2], 
-'PI3K/k_r5': [-3,2], 'PI3K/k_f6': [-3,2], 'NFAT_Cytokines/k_f5': [-3,2], 'NFAT_Cytokines/k_f6': [-3,2], 'NFAT_Cytokines/k_f19': [-3,2],'NFAT_Cytokines/k_f20': [-3,2], 'dl4cytokines_parameter/k_f1': [-3,2],
-'dl4cytokines_parameter/k_f5': [-3,2], 'dl4cytokines_parameter/k_r1': [-3,2], 'dl4cytokines_parameter/k_r4': [-3,2], 'dl4cytokines_parameter/k_r6': [-3,2],
-'PLC/k_f8': [-3,2], 'PLC/k_r8': [-3,2], 'PLC/k_f9': [-3,2], 'PLC/k_r9': [-3,2],'PLC/k_f10': [-3,2],'PLC/k_r10': [-3,2],'IP3/kf11': [-3,2],'IP3_Ca/kf12': [-3,2],'IP3_Ca/kr12': [-3,2]}
+bounds_dictionary = {'PI3K/k_f6': [-3,2]}
 
 # The state variable  or variables in the model that the data represents
 num_series = 2
@@ -31,8 +27,9 @@ num_samples = 5
 num_retain = 10
 
 #List of parameters you want to exclude from fit
-fit_parameters_exclude = ['dl4cytokines_parameter/HGDL4','dl4cytokines_parameter/k_f2','dl4cytokines_parameter/k_f3', 'dl4cytokines_parameter/k_f4','dl4cytokines_parameter/k_f6', 'dl4cytokines_parameter/k_f7','dl4cytokines_parameter/Pi', 'IP3_Ca/IP3Ca']
- 
+fit_parameters_exclude = []
+
+
 class Simulation(object):
     def __init__(self):
         self.simulation = oc.simulation()
@@ -241,4 +238,3 @@ plt.xlabel('Time (s)')
 plt.ylabel('TNFalpha (uM)')
 fig.canvas.draw()
 plt.show()
-
